@@ -11,7 +11,7 @@
 
 <meta name="author" content="Bailey N. Walker, Jada Nix, Chace Wilson, Mackenzie A. Marrella, Savannah L. Speckhart, Lydia Wooldridge, Con-Ning Yen, Jocelyn S. Bodmer, Laila T. Kirkpatrick, Sarah E.D. Moorey, David E. Gerrard, Alan Ealy, Fernando H. Biase" />
 
-<meta name="date" content="2022-03-23" />
+<meta name="date" content="2022-03-24" />
 
 <title>Supplementary code to   Tight gene co-expression between oocyte and surrounding cumulus is critical for oocyte developmental competence</title>
 
@@ -1501,7 +1501,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Supplementary code to <br> Tight gene co-expression between oocyte and surrounding cumulus is critical for oocyte developmental competence</h1>
 <h4 class="author">Bailey N. Walker, Jada Nix, Chace Wilson, Mackenzie A. Marrella, Savannah L. Speckhart, Lydia Wooldridge, Con-Ning Yen, Jocelyn S. Bodmer, Laila T. Kirkpatrick, Sarah E.D. Moorey, David E. Gerrard, Alan Ealy, Fernando H. Biase</h4>
-<h4 class="date">2022-03-23</h4>
+<h4 class="date">2022-03-24</h4>
 
 </div>
 
@@ -1856,16 +1856,16 @@ oocyte_tpm &lt;- as.data.frame(t( t(x) * 1e6 / colSums(x) ))
 oocyte_fpkm&lt;-as.data.frame(edgeR::rpkm(oocyte_count_data, oocyte_gene_length))
 oocyte_cpm&lt;-as.data.frame(edgeR::cpm(oocyte_count_data))
 oocyte_cpm_filtered&lt;-oocyte_cpm[rowSums(oocyte_cpm&gt;2) &gt; 8,]
-oocyte_tpm_filtred&lt;-oocyte_fpkm[rowSums(oocyte_tpm&gt;1) &gt; 8,]
+oocyte_tpm_filtered&lt;-oocyte_fpkm[rowSums(oocyte_tpm&gt;1) &gt; 8,]
 
-genes_expressed_oocyte&lt;-intersect(rownames(oocyte_cpm_filtered), rownames(oocyte_tpm_filtred))
-oocyte_tpm_filtred&lt;-oocyte_tpm_filtred[rownames(oocyte_tpm_filtred) %in% genes_expressed_oocyte,]
+genes_expressed_oocyte&lt;-intersect(rownames(oocyte_cpm_filtered), rownames(oocyte_tpm_filtered))
+oocyte_tpm_filtered&lt;-oocyte_tpm_filtered[rownames(oocyte_tpm_filtered) %in% genes_expressed_oocyte,]
 oocyte_cpm_filtered&lt;-oocyte_cpm_filtered[rownames(oocyte_cpm_filtered) %in% genes_expressed_oocyte,]
 oocyte_count_filtered&lt;-oocyte_count_data[rownames(oocyte_count_data) %in% genes_expressed_oocyte,]
 
-oocyte_tpm_filtred&lt;-oocyte_tpm_filtred[complete.cases(oocyte_tpm_filtred),]
+oocyte_tpm_filtered&lt;-oocyte_tpm_filtered[complete.cases(oocyte_tpm_filtered),]
 oocyte_count_filtered&lt;-oocyte_count_filtered[complete.cases(oocyte_count_filtered),]
-#dim(oocyte_tpm_filtred)
+#dim(oocyte_tpm_filtered)
 #dim(oocyte_count_filtered)
 
 x &lt;- cumulus_count_data / cumulus_gene_length
@@ -1873,23 +1873,23 @@ cumulus_tpm &lt;- as.data.frame(t( t(x) * 1e6 / colSums(x) ))
 cumulus_fpkm&lt;-as.data.frame(edgeR::rpkm(cumulus_count_data, cumulus_gene_length))
 cumulus_cpm&lt;-as.data.frame(edgeR::cpm(cumulus_count_data))
 cumulus_cpm_filtered&lt;-cumulus_cpm[rowSums(cumulus_cpm&gt;2) &gt; 8,]
-cumulus_tpm_filtred&lt;-cumulus_tpm[rowSums(cumulus_tpm&gt;1) &gt; 8,]
+cumulus_tpm_filtered&lt;-cumulus_tpm[rowSums(cumulus_tpm&gt;1) &gt; 8,]
 
-genes_expressed_cumulus&lt;-intersect(rownames(cumulus_cpm_filtered), rownames(cumulus_tpm_filtred))
-cumulus_tpm_filtred&lt;-cumulus_tpm_filtred[rownames(cumulus_tpm_filtred) %in% genes_expressed_cumulus,]
+genes_expressed_cumulus&lt;-intersect(rownames(cumulus_cpm_filtered), rownames(cumulus_tpm_filtered))
+cumulus_tpm_filtered&lt;-cumulus_tpm_filtered[rownames(cumulus_tpm_filtered) %in% genes_expressed_cumulus,]
 cumulus_cpm_filtered&lt;-cumulus_cpm_filtered[rownames(cumulus_cpm_filtered) %in% genes_expressed_cumulus,]
 cumulus_count_filtered&lt;-cumulus_count_data[rownames(cumulus_count_data) %in% genes_expressed_cumulus,]
 
-cumulus_tpm_filtred&lt;-cumulus_tpm_filtred[complete.cases(cumulus_tpm_filtred),]
+cumulus_tpm_filtered&lt;-cumulus_tpm_filtered[complete.cases(cumulus_tpm_filtered),]
 cumulus_count_filtered&lt;-cumulus_count_filtered[complete.cases(cumulus_count_filtered),]
-#dim(cumulus_tpm_filtred)
+#dim(cumulus_tpm_filtered)
 #dim(cumulus_count_filtered)
 
-oocyte_tpm_filtred_annotated&lt;-merge(oocyte_tpm_filtred, annotation.ensembl.symbol, by.x=&quot;row.names&quot;, by.y=&quot;ensembl_gene_id&quot;, all.x=TRUE, all.y=FALSE)
-#write_delim(oocyte_tpm_filtred_annotated, &quot;/mnt/storage/lab_folder/shared_R_codes/fernando/BCB_oocyte_cumulus/results/2022_01_18_oocyte_tpm_filtred_annotated.txt&quot;, delim = &quot;\t&quot;, quote =  &quot;none&quot;)
+oocyte_tpm_filtered_annotated&lt;-merge(oocyte_tpm_filtered, annotation.ensembl.symbol, by.x=&quot;row.names&quot;, by.y=&quot;ensembl_gene_id&quot;, all.x=TRUE, all.y=FALSE)
+#write_delim(oocyte_tpm_filtered_annotated, &quot;/mnt/storage/lab_folder/shared_R_codes/fernando/BCB_oocyte_cumulus/results/2022_01_18_oocyte_tpm_filtered_annotated.txt&quot;, delim = &quot;\t&quot;, quote =  &quot;none&quot;)
 
-cumulus_tpm_filtred_annotated&lt;-merge(cumulus_tpm_filtred, annotation.ensembl.symbol, by.x=&quot;row.names&quot;, by.y=&quot;ensembl_gene_id&quot;, all.x=TRUE, all.y=FALSE)
-#write_delim(cumulus_tpm_filtred_annotated, &quot;/mnt/storage/lab_folder/shared_R_codes/fernando/BCB_oocyte_cumulus/results/2022_01_18_cumulus_tpm_filtred_annotated.txt&quot;, delim = &quot;\t&quot;, quote =  &quot;none&quot;)</code></pre>
+cumulus_tpm_filtered_annotated&lt;-merge(cumulus_tpm_filtered, annotation.ensembl.symbol, by.x=&quot;row.names&quot;, by.y=&quot;ensembl_gene_id&quot;, all.x=TRUE, all.y=FALSE)
+#write_delim(cumulus_tpm_filtered_annotated, &quot;/mnt/storage/lab_folder/shared_R_codes/fernando/BCB_oocyte_cumulus/results/2022_01_18_cumulus_tpm_filtered_annotated.txt&quot;, delim = &quot;\t&quot;, quote =  &quot;none&quot;)</code></pre>
 <pre class="r"><code>gene_numbers_venn_diagram&lt;-venn.diagram(
   list(&quot;oocyte&quot;=rownames(oocyte_count_filtered), &quot;cumulus cells&quot;=rownames(cumulus_count_filtered)), cex=1,
   scaled= FALSE, filename = NULL, output=TRUE,
@@ -1902,7 +1902,7 @@ cumulus_tpm_filtred_annotated&lt;-merge(cumulus_tpm_filtred, annotation.ensembl.
 
 cumulus_group&lt;-factor(c(&quot;BCBpos&quot;, &quot;BCBpos&quot;, &quot;BCBneg&quot;,   &quot;BCBpos&quot;,       &quot;BCBneg&quot;,   &quot;BCBneg&quot;,   &quot;BCBneg&quot;,   &quot;BCBpos&quot;, &quot;BCBpos&quot;, &quot;BCBpos&quot;,   &quot;BCBpos&quot;,   &quot;BCBpos&quot;,   &quot;BCBpos&quot;,   &quot;BCBneg&quot;,   &quot;BCBneg&quot;,   &quot;BCBneg&quot;,   &quot;BCBneg&quot;,   &quot;BCBneg&quot;, &quot;BCBneg&quot;), levels=c( &quot;BCBneg&quot;, &quot;BCBpos&quot;))
 
-data_plot&lt;-(cbind(data.frame(t(oocyte_tpm_filtred)), oocyte_group, names=colnames(oocyte_tpm_filtred)))
+data_plot&lt;-(cbind(data.frame(t(oocyte_tpm_filtered)), oocyte_group, names=colnames(oocyte_tpm_filtered)))
 res.prcomp &lt;-stats::prcomp(data_plot[,-c(dim(data_plot)[2]-1,dim(data_plot)[2])], scale. = TRUE)
 pca_plot_oocyte&lt;-ggplot2::autoplot(res.prcomp, data=data_plot, fill=&#39;oocyte_group&#39;, shape=21, size=2)+
 scale_fill_manual(name=NULL,values=c( &quot;white&quot;, &quot;blue&quot;))+
@@ -1915,7 +1915,7 @@ axis.title=element_text(size=12, color=&quot;black&quot;),
 legend.position=&quot;none&quot;
 )
 
-data_plot&lt;-(cbind(data.frame(t(cumulus_tpm_filtred)), cumulus_group, names=colnames(cumulus_tpm_filtred)))
+data_plot&lt;-(cbind(data.frame(t(cumulus_tpm_filtered)), cumulus_group, names=colnames(cumulus_tpm_filtered)))
 res.prcomp &lt;-stats::prcomp(data_plot[,-c(dim(data_plot)[2]-1,dim(data_plot)[2])], scale. = TRUE)
 pca_plot_cumulus&lt;-ggplot2::autoplot(res.prcomp, data=data_plot, fill=&#39;cumulus_group&#39;, shape=21, size=2)+
 scale_fill_manual(name=NULL,values=c( &quot;white&quot;, &quot;blue&quot;))+
@@ -1930,7 +1930,7 @@ legend.direction=&quot;horizontal&quot;
 
 legend&lt;-ggpubr::get_legend(pca_plot_cumulus)
 
-data_plot&lt;-(cbind(data.frame(t(cumulus_tpm_filtred)), cumulus_group, names=colnames(cumulus_tpm_filtred)))
+data_plot&lt;-(cbind(data.frame(t(cumulus_tpm_filtered)), cumulus_group, names=colnames(cumulus_tpm_filtered)))
 res.prcomp &lt;-stats::prcomp(data_plot[,-c(dim(data_plot)[2]-1,dim(data_plot)[2])], scale. = TRUE)
 pca_plot_cumulus&lt;-ggplot2::autoplot(res.prcomp, data=data_plot, fill=&#39;cumulus_group&#39;, shape=21, size=2)+
 scale_fill_manual(name=NULL,values=c( &quot;white&quot;, &quot;blue&quot;))+
@@ -2190,8 +2190,8 @@ gene_cumulus&lt;-as.character(cor_oocyte_cc_filtered$gene_cumulus)[i]
 gene_symbol_oocyte&lt;-as.character(cor_oocyte_cc_filtered$oocyte_gene_symbol)[i]
 gene_symbol_cumulus&lt;-as.character(cor_oocyte_cc_filtered$cumulus_gene_symbol)[i]
 
-expression_oocyte&lt;-data.frame(expression_oocyte=t(oocyte_tpm_filtred[rownames(oocyte_tpm_filtred)==gene_oocyte,])[,1])
-expression_cumulus&lt;-data.frame( expression_cumulus=t(cumulus_tpm_filtred[rownames(cumulus_tpm_filtred)==gene_cumulus,])[,1])
+expression_oocyte&lt;-data.frame(expression_oocyte=t(oocyte_tpm_filtered[rownames(oocyte_tpm_filtered)==gene_oocyte,])[,1])
+expression_cumulus&lt;-data.frame( expression_cumulus=t(cumulus_tpm_filtered[rownames(cumulus_tpm_filtered)==gene_cumulus,])[,1])
 
 model_oocyte_cc&lt;-lm(expression_oocyte$expression_oocyte ~ expression_cumulus$expression_cumulus)
 
@@ -2216,8 +2216,8 @@ gene_cumulus&lt;-as.character(cor_oocyte_cc_filtered$gene_cumulus)[i]
 gene_symbol_oocyte&lt;-as.character(cor_oocyte_cc_filtered$oocyte_gene_symbol)[i]
 gene_symbol_cumulus&lt;-as.character(cor_oocyte_cc_filtered$cumulus_gene_symbol)[i]
 
-expression_oocyte&lt;-data.frame(expression_oocyte=t(oocyte_tpm_filtred[rownames(oocyte_tpm_filtred)==gene_oocyte,])[,1])
-expression_cumulus&lt;-data.frame( expression_cumulus=t(cumulus_tpm_filtred[rownames(cumulus_tpm_filtred)==gene_cumulus,])[,1])
+expression_oocyte&lt;-data.frame(expression_oocyte=t(oocyte_tpm_filtered[rownames(oocyte_tpm_filtered)==gene_oocyte,])[,1])
+expression_cumulus&lt;-data.frame( expression_cumulus=t(cumulus_tpm_filtered[rownames(cumulus_tpm_filtered)==gene_cumulus,])[,1])
 
 graph&lt;-i
 
@@ -2464,8 +2464,8 @@ volcano_plot_deg_cc&lt;-ggplot(data=cumulus_gene_annotation, aes(x=logFC, y=-log
         legend.text = element_text(color=&quot;black&quot;, size=8, margin = margin(l = -10)),
         plot.margin=unit(c(0,0,3,0), &quot;mm&quot;),
         legend.box.margin=margin(0,0,0,-20))</code></pre>
-<pre class="r"><code>cumulus_tpm_filtred_deg&lt;-cumulus_tpm_filtred[rownames(cumulus_tpm_filtred) %in% cumulus_gene_annotation[(cumulus_gene_annotation$FDR&lt;0.01) &amp; (cumulus_gene_annotation$padj&lt;0.01) ,1] , ]
-data_plot&lt;-(cbind(data.frame(t(cumulus_tpm_filtred_deg)), cumulus_group, names=colnames(cumulus_tpm_filtred_deg)))
+<pre class="r"><code>cumulus_tpm_filtered_deg&lt;-cumulus_tpm_filtered[rownames(cumulus_tpm_filtered) %in% cumulus_gene_annotation[(cumulus_gene_annotation$FDR&lt;0.01) &amp; (cumulus_gene_annotation$padj&lt;0.01) ,1] , ]
+data_plot&lt;-(cbind(data.frame(t(cumulus_tpm_filtered_deg)), cumulus_group, names=colnames(cumulus_tpm_filtered_deg)))
 res.prcomp &lt;-stats::prcomp(data_plot[,-c(dim(data_plot)[2]-1,dim(data_plot)[2])], scale. = TRUE)
 pca_plot_deg_cc&lt;-ggplot2::autoplot(res.prcomp, data=data_plot, fill=&#39;cumulus_group&#39;, shape=21, size=1)+
 scale_fill_manual(name=NULL,values=c( &quot;white&quot;, &quot;blue&quot;), labels=c(&quot;BCB-&quot;, &quot;BCB+&quot;))+
@@ -3021,8 +3021,8 @@ gene_cumulus&lt;-as.character(cor_oocyte_BCB_pos_neg_subset$gene_cumulus)[i]
 gene_symbol_oocyte&lt;-as.character(cor_oocyte_BCB_pos_neg_subset$oocyte_gene_symbol)[i]
 gene_symbol_cumulus&lt;-as.character(cor_oocyte_BCB_pos_neg_subset$cumulus_gene_symbol)[i]
 
-expression_oocyte&lt;-data.frame(expression_oocyte=t(oocyte_tpm_filtred[rownames(oocyte_tpm_filtred)==gene_oocyte,grep(&quot;pos&quot;,oocyte_group)])[,1])
-expression_cumulus&lt;-data.frame( expression_cumulus=t(cumulus_tpm_filtred[rownames(cumulus_tpm_filtred)==gene_cumulus,grep(&quot;pos&quot;,cumulus_group)])[,1])
+expression_oocyte&lt;-data.frame(expression_oocyte=t(oocyte_tpm_filtered[rownames(oocyte_tpm_filtered)==gene_oocyte,grep(&quot;pos&quot;,oocyte_group)])[,1])
+expression_cumulus&lt;-data.frame( expression_cumulus=t(cumulus_tpm_filtered[rownames(cumulus_tpm_filtered)==gene_cumulus,grep(&quot;pos&quot;,cumulus_group)])[,1])
 
 model_oocyte_cc&lt;-lm(expression_oocyte$expression_oocyte ~ expression_cumulus$expression_cumulus)
 
@@ -3046,8 +3046,8 @@ gene_cumulus&lt;-as.character(cor_oocyte_BCB_pos_neg_subset$gene_cumulus)[i]
 gene_symbol_oocyte&lt;-as.character(cor_oocyte_BCB_pos_neg_subset$oocyte_gene_symbol)[i]
 gene_symbol_cumulus&lt;-as.character(cor_oocyte_BCB_pos_neg_subset$cumulus_gene_symbol)[i]
 
-expression_oocyte&lt;-data.frame(expression_oocyte=t(oocyte_tpm_filtred[rownames(oocyte_tpm_filtred)==gene_oocyte,grep(&quot;pos&quot;,oocyte_group)])[,1])
-expression_cumulus&lt;-data.frame( expression_cumulus=t(cumulus_tpm_filtred[rownames(cumulus_tpm_filtred)==gene_cumulus,grep(&quot;pos&quot;,cumulus_group)])[,1])
+expression_oocyte&lt;-data.frame(expression_oocyte=t(oocyte_tpm_filtered[rownames(oocyte_tpm_filtered)==gene_oocyte,grep(&quot;pos&quot;,oocyte_group)])[,1])
+expression_cumulus&lt;-data.frame( expression_cumulus=t(cumulus_tpm_filtered[rownames(cumulus_tpm_filtered)==gene_cumulus,grep(&quot;pos&quot;,cumulus_group)])[,1])
 
 graph&lt;-i
 
@@ -3084,8 +3084,8 @@ gene_cumulus&lt;-as.character(cor_oocyte_BCB_pos_neg_subset$gene_cumulus)[i]
 gene_symbol_oocyte&lt;-as.character(cor_oocyte_BCB_pos_neg_subset$oocyte_gene_symbol)[i]
 gene_symbol_cumulus&lt;-as.character(cor_oocyte_BCB_pos_neg_subset$cumulus_gene_symbol)[i]
 
-expression_oocyte&lt;-data.frame(expression_oocyte=t(oocyte_tpm_filtred[rownames(oocyte_tpm_filtred)==gene_oocyte,grep(&quot;neg&quot;,oocyte_group)])[,1])
-expression_cumulus&lt;-data.frame( expression_cumulus=t(cumulus_tpm_filtred[rownames(cumulus_tpm_filtred)==gene_cumulus,grep(&quot;neg&quot;,cumulus_group)])[,1])
+expression_oocyte&lt;-data.frame(expression_oocyte=t(oocyte_tpm_filtered[rownames(oocyte_tpm_filtered)==gene_oocyte,grep(&quot;neg&quot;,oocyte_group)])[,1])
+expression_cumulus&lt;-data.frame( expression_cumulus=t(cumulus_tpm_filtered[rownames(cumulus_tpm_filtered)==gene_cumulus,grep(&quot;neg&quot;,cumulus_group)])[,1])
 
 graph&lt;-i
 
@@ -3151,8 +3151,8 @@ gene_cumulus&lt;-as.character(cor_oocyte_BCB_pos_neg_subset$gene_cumulus)[i]
 gene_symbol_oocyte&lt;-as.character(cor_oocyte_BCB_pos_neg_subset$oocyte_gene_symbol)[i]
 gene_symbol_cumulus&lt;-as.character(cor_oocyte_BCB_pos_neg_subset$cumulus_gene_symbol)[i]
 
-expression_oocyte&lt;-data.frame(expression_oocyte=t(oocyte_tpm_filtred[rownames(oocyte_tpm_filtred)==gene_oocyte,grep(&quot;neg&quot;,oocyte_group)])[,1])
-expression_cumulus&lt;-data.frame( expression_cumulus=t(cumulus_tpm_filtred[rownames(cumulus_tpm_filtred)==gene_cumulus,grep(&quot;neg&quot;,cumulus_group)])[,1])
+expression_oocyte&lt;-data.frame(expression_oocyte=t(oocyte_tpm_filtered[rownames(oocyte_tpm_filtered)==gene_oocyte,grep(&quot;neg&quot;,oocyte_group)])[,1])
+expression_cumulus&lt;-data.frame( expression_cumulus=t(cumulus_tpm_filtered[rownames(cumulus_tpm_filtered)==gene_cumulus,grep(&quot;neg&quot;,cumulus_group)])[,1])
 
 model_oocyte_cc&lt;-lm(expression_oocyte$expression_oocyte ~ expression_cumulus$expression_cumulus)
 
@@ -3175,8 +3175,8 @@ gene_cumulus&lt;-as.character(cor_oocyte_BCB_pos_neg_subset$gene_cumulus)[i]
 gene_symbol_oocyte&lt;-as.character(cor_oocyte_BCB_pos_neg_subset$oocyte_gene_symbol)[i]
 gene_symbol_cumulus&lt;-as.character(cor_oocyte_BCB_pos_neg_subset$cumulus_gene_symbol)[i]
 
-expression_oocyte&lt;-data.frame(expression_oocyte=t(oocyte_tpm_filtred[rownames(oocyte_tpm_filtred)==gene_oocyte,grep(&quot;neg&quot;,oocyte_group)])[,1])
-expression_cumulus&lt;-data.frame( expression_cumulus=t(cumulus_tpm_filtred[rownames(cumulus_tpm_filtred)==gene_cumulus,grep(&quot;neg&quot;,cumulus_group)])[,1])
+expression_oocyte&lt;-data.frame(expression_oocyte=t(oocyte_tpm_filtered[rownames(oocyte_tpm_filtered)==gene_oocyte,grep(&quot;neg&quot;,oocyte_group)])[,1])
+expression_cumulus&lt;-data.frame( expression_cumulus=t(cumulus_tpm_filtered[rownames(cumulus_tpm_filtered)==gene_cumulus,grep(&quot;neg&quot;,cumulus_group)])[,1])
 
 graph&lt;-i
 
@@ -3213,8 +3213,8 @@ gene_cumulus&lt;-as.character(cor_oocyte_BCB_pos_neg_subset$gene_cumulus)[i]
 gene_symbol_oocyte&lt;-as.character(cor_oocyte_BCB_pos_neg_subset$oocyte_gene_symbol)[i]
 gene_symbol_cumulus&lt;-as.character(cor_oocyte_BCB_pos_neg_subset$cumulus_gene_symbol)[i]
 
-expression_oocyte&lt;-data.frame(expression_oocyte=t(oocyte_tpm_filtred[rownames(oocyte_tpm_filtred)==gene_oocyte,grep(&quot;pos&quot;,oocyte_group)])[,1])
-expression_cumulus&lt;-data.frame( expression_cumulus=t(cumulus_tpm_filtred[rownames(cumulus_tpm_filtred)==gene_cumulus,grep(&quot;pos&quot;,cumulus_group)])[,1])
+expression_oocyte&lt;-data.frame(expression_oocyte=t(oocyte_tpm_filtered[rownames(oocyte_tpm_filtered)==gene_oocyte,grep(&quot;pos&quot;,oocyte_group)])[,1])
+expression_cumulus&lt;-data.frame( expression_cumulus=t(cumulus_tpm_filtered[rownames(cumulus_tpm_filtered)==gene_cumulus,grep(&quot;pos&quot;,cumulus_group)])[,1])
 
 graph&lt;-i
 
